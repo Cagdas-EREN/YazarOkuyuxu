@@ -5,29 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Abstract;
+using DataAccess.Abstract;
 
 namespace Business.Concrete
 {
-    public class CategoryManager
+    public class CategoryManager : ICategoryService
     {
-        GenericRepository<Category> repo = new GenericRepository<Category>();
+        private ICategoryDal _categoryDal;
+
+        public CategoryManager(ICategoryDal categoryDal)
+        {
+            _categoryDal = categoryDal;
+        }
 
         public List<Category> GetAll()
         {
-            return repo.GetAll();
+            return _categoryDal.GetAll();
         }
 
         public void Add(Category category)
         {
-            if (category.CategoryName == "" || category.CategoryName.Length <= 3
-                || category.CategoryDescription == "" || category.CategoryName.Length >= 50)
-            {
-                //  hata mesajı
-            }
-            else
-            {
-                repo.Insert(category);
-            }
+            _categoryDal.Insert(category);
         }
     }
 }
