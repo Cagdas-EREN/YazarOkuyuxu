@@ -10,9 +10,11 @@ namespace DataAccess.Abstract
     public interface IRepository<T>
     {
         List<T> GetAll();
+        T Get(Expression<Func<T, bool>> filter);
         void Insert(T t);
         void Update(T t);
         void Delete(T t);
-        List<T> GetById(Expression<Func<T, bool>> filter);
+        List<T> GetAll(Expression<Func<T, bool>> filter);
+        int Count(Expression<Func<T, bool>> filter = null);
     }
 }

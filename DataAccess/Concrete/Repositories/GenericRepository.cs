@@ -20,7 +20,8 @@ namespace DataAccess.Concrete.Repositories
         }
         public void Delete(T t)
         {
-            _object.Remove(t);
+            var deletedEntity = context.Entry(t);
+            deletedEntity.State = EntityState.Deleted;
             context.SaveChanges();
         }
 
@@ -29,19 +30,32 @@ namespace DataAccess.Concrete.Repositories
             return _object.ToList();
         }
 
-        public List<T> GetById(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter)
+        {
+            return _object.SingleOrDefault(filter);
+        }
+
+        public List<T> GetAll(Expression<Func<T, bool>> filter)
         {
             return _object.Where(filter).ToList();
         }
 
+        public int Count(Expression<Func<T, bool>> filter = null)
+        {
+            return filter == null ? _object.Count() : _object.Where(filter).Count();
+        }
+
         public void Insert(T t)
         {
-            _object.Add(t);
+            var addedEntity = context.Entry(t);
+            addedEntity.State = EntityState.Added;
             context.SaveChanges();
         }
 
         public void Update(T t)
         {
+            var updatedEntity = context.Entry(t);
+            updatedEntity.State = EntityState.Modified;
             context.SaveChanges();
         }
     }

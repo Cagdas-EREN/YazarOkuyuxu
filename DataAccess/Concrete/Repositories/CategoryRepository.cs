@@ -20,9 +20,24 @@ namespace DataAccess.Concrete.Repositories
             context.SaveChanges();
         }
 
+        public List<Category> GetAll(Expression<Func<Category, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count(Expression<Func<Category, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Category> GetAll()
         {
             return _object.ToList();
+        }
+
+        public Category Get(Expression<Func<Category, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Category> GetById(Expression<Func<Category, bool>> filter)
