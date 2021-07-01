@@ -35,12 +35,17 @@ namespace Business.Concrete
 
         public void Delete(Heading heading)
         {
-            _headingDal.Delete(heading);
+          _headingDal.Update(heading);
         }
 
         public void Update(Heading heading)
         {
             _headingDal.Update(heading);
+        }
+
+        public List<Heading> GetAllByWriter()
+        {
+            return _headingDal.GetAll(x => x.WriterId == 1); 
         }
     }
 }

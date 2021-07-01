@@ -16,6 +16,8 @@ namespace YazarOkuyuxu.Controllers
         // GET: Category
 
         private CategoryManager cm = new CategoryManager(new EfCategoryDal());
+
+        [Authorize]
         public ActionResult Index()
         {
             return View();

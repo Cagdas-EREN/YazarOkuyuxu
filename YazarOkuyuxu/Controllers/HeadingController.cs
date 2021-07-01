@@ -48,9 +48,35 @@ namespace YazarOkuyuxu.Controllers
             headingManager.Add(heading);
             return RedirectToAction("Index");
         }
-        public ActionResult ContentByHeading()
+        
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
-            return View();
+            List<SelectListItem> categoryList = (from x in categoryManager.GetAll()
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = x.CategoryName,
+                                                     Value = x.CategoryId.ToString()
+                                                 }).ToList();
+            ViewBag.vlc = categoryList;
+
+            var headingValue = headingManager.GetById(id);
+            return View(headingValue);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Heading heading)
+        {
+            headingManager.Update(heading);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var headingValue = headingManager.GetById(id);
+            headingValue.HeadingStatus = false;
+            headingManager.Delete(headingValue);
+            return RedirectToAction("Index");
         }
     }
 }
