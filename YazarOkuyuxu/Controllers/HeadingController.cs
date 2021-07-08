@@ -21,6 +21,12 @@ namespace YazarOkuyuxu.Controllers
             return View(heading);
         }
 
+        public ActionResult HeadingReport()
+        {
+            var heading = headingManager.GetAll();
+            return View(heading);
+        }
+
         [HttpGet]
         public ActionResult Add()
         {

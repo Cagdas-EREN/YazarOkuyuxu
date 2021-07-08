@@ -16,7 +16,7 @@ namespace YazarOkuyuxu.Controllers
         // GET: AdminCategory
         private CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
 
-        [Authorize(Roles="B")]
+        [Authorize(Roles = "B")]
         public ActionResult Index()
         {
             var category = categoryManager.GetAll();

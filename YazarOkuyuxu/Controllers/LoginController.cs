@@ -12,10 +12,13 @@ using Utilities;
 
 namespace YazarOkuyuxu.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         // GET: Login
         AdminManager adminManager = new AdminManager(new EfAdminDal());
+        private WriterManager writerManager = new WriterManager(new EfWriterDal());
+        WriterLoginManager writerLoginManager = new WriterLoginManager(new EfWriterDal());
 
         [HttpGet]
         public ActionResult Index()
@@ -30,7 +33,7 @@ namespace YazarOkuyuxu.Controllers
             string password = admin.AdminPassword.Trim();
             string hasPasword = new CryptoHelper().ComputeSha256Hash(password); 
 
-            var adminInfo = adminManager.GetList().FirstOrDefault(x => x.AdminUserName == admin.AdminUserName && x.AdminPassword == hasPasword);
+            var adminInfo = adminManager.GetAll().FirstOrDefault(x => x.AdminUserName == admin.AdminUserName && x.AdminPassword == hasPasword);
 
             if (adminInfo != null)
             {
@@ -42,6 +45,39 @@ namespace YazarOkuyuxu.Controllers
             {
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpGet]
+        public ActionResult WriterLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult WriterLogin(Writer writer)
+        {
+            //string password = writer.WriterPassword.Trim();
+            //string hasPasword = new CryptoHelper().ComputeSha256Hash(password);
+
+            var WriterUserİnfo = writerLoginManager.GetWriter(writer.WriterMail, writer.WriterPassword);
+
+            if (WriterUserİnfo != null)
+            {
+                FormsAuthentication.SetAuthCookie(WriterUserİnfo.WriterMail, false);
+                Session["WriterMail"] = WriterUserİnfo.WriterMail;
+                return RedirectToAction("MyContent", "WriterPanelContent");
+            }
+            else
+            {
+                return RedirectToAction("WriterLogin");
+            }
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Headings","Default");
         }
     }
 }

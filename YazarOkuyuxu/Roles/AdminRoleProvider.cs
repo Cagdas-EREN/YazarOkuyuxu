@@ -43,7 +43,7 @@ namespace YazarOkuyuxu.Roles
         public override string[] GetRolesForUser(string username)
         {
             
-            var usernameRole = AdminManager.GetList().FirstOrDefault(x => x.AdminUserName == username);
+            var usernameRole = AdminManager.GetAll().FirstOrDefault(x => x.AdminUserName == username);
             return new string[] { usernameRole.AdminRole };
         }
 

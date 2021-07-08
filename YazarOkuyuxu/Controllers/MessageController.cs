@@ -19,16 +19,16 @@ namespace YazarOkuyuxu.Controllers
         MessageValidator messageValidator = new MessageValidator();
 
         [Authorize]
-        public ActionResult Inbox()
+        public ActionResult Inbox(string p)
         {
-            var messageList = messageManager.GetAllInbox();
+            var messageList = messageManager.GetAllInbox(p);
             ViewBag.receiver = messageList.Count();
             return View(messageList);
         }
 
-        public ActionResult Sendbox()
+        public ActionResult Sendbox(string p)
         {
-            var messageList = messageManager.GetAllSendbox();
+            var messageList = messageManager.GetAllSendbox(p);
             return View(messageList);
         }
 

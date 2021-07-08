@@ -30,15 +30,15 @@ namespace YazarOkuyuxu.Controllers
             return View(contactValues);
         }
 
-        public PartialViewResult MessageListMenu()
+        public PartialViewResult MessageListMenu(string p)
         {
             var contactValues = contactManager.GetAll();
             ViewBag.contact = contactValues.Count();
 
-            var messageList = messageManager.GetAllInbox();
+            var messageList = messageManager.GetAllInbox(p);
             ViewBag.receiver = messageList.Count();
 
-            var messagecount = messageManager.GetAllSendbox();
+            var messagecount = messageManager.GetAllSendbox(p);
             ViewBag.sendvalue = messagecount.Count();
 
             var draftValue = messageManager.GetAllDraft();

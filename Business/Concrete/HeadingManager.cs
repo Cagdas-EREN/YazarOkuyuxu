@@ -43,9 +43,9 @@ namespace Business.Concrete
             _headingDal.Update(heading);
         }
 
-        public List<Heading> GetAllByWriter()
+        public List<Heading> GetAllByWriter(int id)
         {
-            return _headingDal.GetAll(x => x.WriterId == 1); 
+            return _headingDal.GetAll(x => x.WriterId == id); 
         }
     }
 }

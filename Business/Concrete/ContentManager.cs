@@ -19,7 +19,7 @@ namespace Business.Concrete
         }
         public void Add(Content content)
         {
-            throw new NotImplementedException();
+            _contentDal.Insert(content);
         }
 
         public void Delete(Content content)
@@ -27,9 +27,14 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public List<Content> GetAll()
+        public List<Content> GetAll(string search)
         {
-            throw new NotImplementedException();
+            return _contentDal.GetAll(x=>x.ContentValue.Contains(search));
+        }
+
+        public List<Content> GetAllByWriter(int id)
+        {
+            return _contentDal.GetAll(x => x.WriterId == id);
         }
 
         public Content GetById(int id)
